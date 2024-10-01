@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { ScrollView, Button, StyleSheet, Alert } from 'react-native';
-import { CustomInput } from './components/CustomInput';
+import { ScrollView, Button, StyleSheet, Alert, View } from 'react-native';
+import { CustomInput } from '../components/CustomInput';
+import { useRouter } from 'expo-router';
+import { useDispatch } from 'react-redux';
+import { submitForm } from '../state/formSlice'; // Import the Redux action
 
 export default function App() {
+  const router = useRouter(); // Initialize router
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -11,23 +15,22 @@ export default function App() {
 
   const [errors, setErrors] = useState({});
 
+  const dispatch = useDispatch(); // Initialize Redux dispatch
+
   const validateForm = () => {
     let isValid = true;
     let newErrors = {};
 
-    // Validate first name (required)
     if (!firstName) {
       newErrors.firstName = 'First name is required';
       isValid = false;
     }
 
-    // Validate last name (required)
     if (!lastName) {
       newErrors.lastName = 'Last name is required';
       isValid = false;
     }
 
-    // Validate phone number (numbers only)
     const phoneRegex = /^[0-9]+$/;
     if (!phoneNumber) {
       newErrors.phoneNumber = 'Phone number is required';
@@ -43,13 +46,18 @@ export default function App() {
 
   const handleSubmit = () => {
     if (validateForm()) {
-      // Proceed with form submission logic if validation passes
-      Alert.alert('Form submitted', JSON.stringify({ firstName, lastName, phoneNumber, address, businessName }));
+      const formData = { firstName, lastName, phoneNumber, address, businessName };
+      dispatch(submitForm(formData)); // Dispatch the form data to Redux
+      Alert.alert('Form submitted', JSON.stringify(formData));
     }
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.navButtonContainer}>
+        <Button title="About Us" onPress={() => router.push('/aboutUs')} />
+      </View>
+
       <CustomInput
         label="First Name"
         value={firstName}
@@ -92,5 +100,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+  },
+  navButtonContainer: {
+    marginBottom: 20,
   },
 });

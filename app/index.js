@@ -57,6 +57,9 @@ export default function App() {
       <View style={styles.navButtonContainer}>
         <Button title="About Us" onPress={() => router.push('/aboutUs')} />
       </View>
+      <View style={styles.navButtonContainer}>
+        <Button title="Weather Dashboard" onPress={() => router.push('/WeatherDashboard')} />
+      </View>
 
       <CustomInput
         label="First Name"

@@ -3,7 +3,7 @@ import { ScrollView, Button, StyleSheet, Alert, View } from 'react-native';
 import { CustomInput } from '../components/CustomInput';
 import { useRouter } from 'expo-router';
 import { useDispatch } from 'react-redux';
-import { submitForm } from '../state/formSlice'; // Import the Redux action
+import { submitForm } from '../state/formSlice';
 
 export default function App() {
   const router = useRouter(); // Initialize router
@@ -56,6 +56,9 @@ export default function App() {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.navButtonContainer}>
         <Button title="About Us" onPress={() => router.push('/aboutUs')} />
+      </View>
+      <View style={styles.navButtonContainer}>
+        <Button title="Weather Dashboard" onPress={() => router.push('/WeatherDashboard')} />
       </View>
 
       <CustomInput

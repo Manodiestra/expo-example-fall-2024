@@ -3,11 +3,12 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const fetchWeatherData = createAsyncThunk(
     'weather/fetchWeatherData',
     async () => {
-        const apiKey = '',
-        const locationID = '5780026',
+        const apiKey = '';
+        const locationID = '5780026';
         apiUrl = `http://api.openweathermap.org/data/2.5/forecast?id=${locationID}&appid=${apiKey}`;
         const response = await fetch(apiUrl);
         const data = await response.json();
+        console.log("OUR WEATHER DATA", data)
         return data;  // Return the weather data to be used in the reducer
     }
 );
@@ -35,3 +36,7 @@ const weatherSlice = createSlice({
             });
     }
 })
+
+export const selectWeatherData = (state) => state.weather.data;
+
+export default weatherSlice.reducer;

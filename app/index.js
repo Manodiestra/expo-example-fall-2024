@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { ScrollView, Button, StyleSheet, Alert, View } from 'react-native';
 import { CustomInput } from '../components/CustomInput';
 import { useRouter } from 'expo-router';
-import { useDispatch } from 'react-redux';
-import { submitForm } from '../state/formSlice'; // Import the Redux action
+import { useDispatch, useSelector } from 'react-redux';
+import { submitForm, userFormData } from '../state/formSlice'; // Import the Redux action
 
 export default function App() {
   const router = useRouter(); // Initialize router
@@ -12,6 +12,8 @@ export default function App() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
   const [businessName, setBusinessName] = useState('');
+  const allUsers = useSelector(state => userFormData(state));
+  console.log('OUR FORM REDUX STATE', allUsers)
 
   const [errors, setErrors] = useState({});
 
@@ -96,6 +98,8 @@ export default function App() {
         placeholder="Enter business name"
       />
       <Button title="Submit" onPress={handleSubmit} />
+
+
     </ScrollView>
   );
 }

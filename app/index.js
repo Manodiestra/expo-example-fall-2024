@@ -3,7 +3,7 @@ import { ScrollView, Button, StyleSheet, Alert, View } from 'react-native';
 import { CustomInput } from '../components/CustomInput';
 import { useRouter } from 'expo-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { submitForm, userFormData } from '../state/formSlice'; // Import the Redux action
+import { postUserForm, userFormData } from '../state/formSlice'; // Import the Redux action
 
 export default function App() {
   const router = useRouter(); // Initialize router
@@ -48,8 +48,8 @@ export default function App() {
 
   const handleSubmit = () => {
     if (validateForm()) {
-      const formData = { firstName, lastName, phoneNumber, address, businessName };
-      dispatch(submitForm(formData)); // Dispatch the form data to Redux
+      const formData = { FirstName: firstName, LastName: lastName, PhoneNumber: phoneNumber, Address: address, Business: businessName };
+      dispatch(postUserForm(formData)); // Dispatch the form data to Redux
       Alert.alert('Form submitted', JSON.stringify(formData));
     }
   };

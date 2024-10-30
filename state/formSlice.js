@@ -1,11 +1,34 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+// Thunk to fetch the list of users from the API
+export const fetchUsers = createAsyncThunk(
+  'form/fetchUsers',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetch('http://127.0.0.1:8080/api/users/', {
+        method: 'GET',
+      });
+
+      if (!response.ok) {
+        // Handle non-2xx responses
+        const errorData = await response.json();
+        return rejectWithValue(errorData);
+      }
+
+      const data = await response.json(); // Parse response as JSON
+      return data; // This will be the resolved action payload
+    } catch (error) {
+      // Return error message or object if the request fails
+      return rejectWithValue(error.response?.data || 'Failed to fetch users');
+    }
+  }
+);
+
 // Thunk to post user form data to the API
 export const postUserForm = createAsyncThunk(
   'form/postUserForm',
   async (userData, { rejectWithValue }) => {
     try {
-      console.log('USE addUser', userData);
       const response = await fetch('http://127.0.0.1:8080/api/addUser/', {
         method: 'POST',
         headers: {
@@ -41,6 +64,7 @@ const formSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Handle POST request
       .addCase(postUserForm.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -51,7 +75,21 @@ const formSlice = createSlice({
       })
       .addCase(postUserForm.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload; // Error message from the server or axios
+        state.error = action.payload; // Error message from the server
+      })
+
+      // Handle GET request for fetching users
+      .addCase(fetchUsers.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchUsers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.formData = action.payload; // Replace formData with the fetched users
+      })
+      .addCase(fetchUsers.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload; // Error message from the server
       });
   },
 });

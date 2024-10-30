@@ -1,9 +1,11 @@
 import React from 'react';
 import { ScrollView, Text, StyleSheet } from 'react-native';
+import Navigation from '../components/Navigation';
 
 export default function AboutUs() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Navigation />
       <Text style={styles.heading}>About Us</Text>
       <Text style={styles.paragraph}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.

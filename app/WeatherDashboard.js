@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchWeatherData, selectWeatherData } from '../state/weatherSlice';
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import Navigation from '../components/Navigation';
 
 export default function WeatherDashboard() {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ export default function WeatherDashboard() {
 
   return (
     <View style={styles.container}>
+      <Navigation />
       <Text style={styles.title}>Today's Weather in {weatherData?.city?.name}</Text>
       {todayWeather ? (
         <View style={styles.weatherInfo}>
@@ -53,10 +55,9 @@ export default function WeatherDashboard() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     padding: 16,
-    backgroundColor: '#f5f5f5'
+    backgroundColor: '#f5f5f5',
+    width: '100%',
   },
   title: {
     fontSize: 24,

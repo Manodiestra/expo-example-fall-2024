@@ -5,7 +5,7 @@ export const fetchUsers = createAsyncThunk(
   'form/fetchUsers',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch('http://127.0.0.1:8080/api/users/', {
+      const response = await fetch('http://127.0.0.1:8000/api/users/', {
         method: 'GET',
       });
 
@@ -29,7 +29,7 @@ export const postUserForm = createAsyncThunk(
   'form/postUserForm',
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await fetch('http://127.0.0.1:8080/api/addUser/', {
+      const response = await fetch('http://127.0.0.1:8000/api/addUser/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

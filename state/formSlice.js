@@ -5,7 +5,9 @@ export const fetchUsers = createAsyncThunk(
   'form/fetchUsers',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/users/', {
+      // serverUrl is the public IP address of the EC2 server if you used the startup scripts from class
+      const serverUrl = process.env.EXPO_PUBLIC_PUBLIC_IP;
+      const response = await fetch(`http://${serverUrl}:8000/api/users/`, {
         method: 'GET',
       });
 
@@ -28,8 +30,10 @@ export const fetchUsers = createAsyncThunk(
 export const postUserForm = createAsyncThunk(
   'form/postUserForm',
   async (userData, { rejectWithValue }) => {
+    // serverUrl is the public IP address of the EC2 server if you used the startup scripts from class
+    const serverUrl = process.env.EXPO_PUBLIC_PUBLIC_IP;
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/addUser/', {
+      const response = await fetch(`http://${serverUrl}:8000/api/addUser/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

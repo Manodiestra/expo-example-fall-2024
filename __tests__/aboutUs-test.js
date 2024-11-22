@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react-native';
 
-import AboutUsScreen from '@/app/aboutUs';
+import AboutUsScreen from '../app/aboutUs';
 
-describe('<HomeScreen />', () => {
-  test('Text renders correctly on HomeScreen', () => {
-    const { getByText } = render(<AboutUsScreen />);
+describe('<AboutUsScreen />', () => {
+  test('renders correctly and matches snapshot', () => {
+    const { toJSON } = render(<AboutUsScreen />);
 
-    getByText('Welcome!');
+    expect(toJSON()).toMatchSnapshot();
   });
 });

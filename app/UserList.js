@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers, userFormData } from '../state/formSlice';
 import { Card, Text } from 'react-native-paper';
 
-export default App = () => {
+export default UserList = () => {
     const dispatch = useDispatch();
     
     useEffect(() => {

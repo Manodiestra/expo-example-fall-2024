@@ -29,20 +29,24 @@ export const fetchUsers = createAsyncThunk(
 // Thunk to post user form data to the API
 export const postUserForm = createAsyncThunk(
   'form/postUserForm',
-  async (userData, { rejectWithValue }) => {
-    // serverUrl is the public IP address of the EC2 server if you used the startup scripts from class
+  async (userData, { rejectWithValue, getState }) => {
     const serverUrl = process.env.EXPO_PUBLIC_PUBLIC_IP;
+
     try {
+      // Retrieve accessToken from the Redux state
+      const { auth } = getState();
+      const accessToken = auth.accessToken;
+
       const response = await fetch(`http://${serverUrl}:8000/api/addUser/`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`, // Include the access token
         },
         body: JSON.stringify(userData),
       });
 
       if (!response.ok) {
-        // Handle non-2xx responses
         const errorData = await response.json();
         return rejectWithValue(errorData);
       }
@@ -50,7 +54,6 @@ export const postUserForm = createAsyncThunk(
       const data = await response.json(); // Parse response as JSON
       return data; // This will be the resolved action payload
     } catch (error) {
-      // Return error message or object if the request fails
       return rejectWithValue(error.response?.data || 'Failed to submit form');
     }
   }

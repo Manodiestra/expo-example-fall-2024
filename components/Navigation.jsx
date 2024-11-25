@@ -9,7 +9,7 @@ export default Navigation = () => {
     return (
         <View style={styles.container}>
             <View style={styles.navButtonContainer}>
-                <Button mode="contained" onPress={() => router.push('/')}>
+                <Button mode="contained" onPress={() => router.push('/UserList')}>
                     Home
                 </Button>
             </View>
